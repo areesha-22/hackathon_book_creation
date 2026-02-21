@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(.specify/scripts/powershell/setup-plan.ps1:*)",
+      "Bash(pwsh -Command:*)",
+      "Bash(npx create-docusaurus@latest website classic --typescript never:*)",
+      "Bash(npx @docusaurus/init@latest init website classic:*)",
+      "Bash(.specify/scripts/powershell/check-prerequisites.ps1:*)",
+      "Bash(node --version)",
+      "Bash(npm --version)"
+    ]
+  }
+}

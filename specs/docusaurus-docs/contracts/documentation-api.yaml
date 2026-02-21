@@ -1,0 +1,157 @@
+# Documentation API Contracts
+
+## Frontmatter Schema
+
+### Document Frontmatter
+```yaml
+id: string                    # Unique document identifier (optional, defaults to file path)
+title: string                 # Document title for page header
+sidebar_label: string         # Label to show in sidebar navigation
+sidebar_position: number      # Position in sidebar ordering (lower numbers first)
+description: string           # SEO description of the document
+keywords: [string]            # SEO keywords for the document
+tags: [string]                # Tags for categorization
+draft: boolean                # Whether document is a draft (defaults to false)
+pagination_next: string       # Next page in pagination (document id)
+pagination_prev: string       # Previous page in pagination (document id)
+image: string                 # Social card image URL
+slug: string                  # Custom URL slug (optional)
+---
+
+## Navigation API
+
+### Sidebar Configuration
+```javascript
+module.exports = {
+  docs: [
+    {
+      type: 'category',        // Category with collapsible items
+      label: 'string',         // Display label for category
+      items: ['doc-id'],       // Array of document IDs or nested categories
+      link: {                  // Optional link for category
+        type: 'doc' | 'generated-index',
+        id: 'doc-id'
+      },
+      collapsed: boolean       // Whether category is initially collapsed (defaults to false)
+    },
+    {
+      type: 'doc',             // Direct document reference
+      id: 'document-id'        // Reference to document by ID
+    },
+    {
+      type: 'link',            // External link
+      label: 'string',         // Display label
+      href: 'string'           // External URL
+    }
+  ]
+};
+```
+
+## Content Schema
+
+### Markdown Content Structure
+```markdown
+---
+# Frontmatter (as defined above)
+---
+
+# Main Content
+
+Content follows standard Markdown syntax with Docusaurus extensions:
+
+## Admonitions
+:::note
+This is a note
+:::
+
+:::tip
+This is a tip
+:::
+
+:::caution
+This is a caution
+:::
+
+:::warning
+This is a warning
+:::
+
+:::danger
+This is a danger
+:::
+
+## Code Blocks
+\```jsx
+function MyComponent() {
+  return <div>Hello World</div>;
+}
+\```
+
+## Import Statements
+import Component from './Component';
+
+## Internal Links
+\[Link Text\](./relative-path/to/doc.md)
+
+## Images
+![Alt Text](./path/to/image.png)
+```
+
+## Configuration Endpoints
+
+### Site Configuration Schema
+```javascript
+module.exports = {
+  // Site metadata
+  title: 'string',              // Site title
+  tagline: 'string',            // Site tagline
+  url: 'string',                // URL of deployment
+  baseUrl: 'string',            // Base URL for site
+  favicon: 'string',            // Favicon path
+
+  // Organization info
+  organizationName: 'string',   // GitHub username/organization
+  projectName: 'string',        // GitHub repo name
+  deploymentBranch: 'string',   // Branch to deploy from
+
+  // Plugins
+  presets: [
+    [
+      '@docusaurus/preset-classic',
+      {
+        docs: {
+          sidebarPath: require.resolve('./sidebars.js'),
+          editUrl: 'string',    // URL for edit link
+        },
+        blog: {},              // Blog configuration
+        theme: {},             // Theme configuration
+        gtag: {},              // Analytics configuration
+      },
+    ],
+  ],
+
+  // Theme configuration
+  themeConfig: {
+    navbar: {
+      title: 'string',
+      logo: {
+        alt: 'string',
+        src: 'string',
+      },
+      items: [
+        {
+          type: 'doc',
+          position: 'left' | 'right',
+          docId: 'string',
+          label: 'string',
+        },
+      ],
+    },
+    footer: {
+      style: 'dark' | 'light',
+      links: [],
+      copyright: 'string',
+    },
+  },
+};
+```
